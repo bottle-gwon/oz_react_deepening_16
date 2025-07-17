@@ -1,13 +1,13 @@
-import { memo } from "react";
+import { memo, useCallback } from "react";
 
 const TodoStats = memo(({ todos }) => {
-    const calculateStats = () => {
-        const total = todos.length;
+    const calculateStats = useCallback(() => {
+        const total =  todos.length
         const completed = todos.filter((todo) => todo.completed).length;
         const active = total - completed;
         const percentCompleted = total === 0 ? 0 : Math.round((completed / total) * 100);
         return { total, completed, active, percentCompleted };
-    };
+    },[todos]);
 
     const stats = calculateStats();
 

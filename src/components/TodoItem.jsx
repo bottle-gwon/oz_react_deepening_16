@@ -1,13 +1,12 @@
-import { memo, useState } from 'react';
+import { memo, useCallback, useRef, useState } from 'react';
 
 const TodoItem = memo(({ todo, onToggle, onDelete, onEdit }) => {
     const [isEditing, setIsEditing] = useState(false);
-    const [editText, setEditText] = useState(todo.text);
-
-    const handleEdit = () => {
-        onEdit(todo.id, editText);
+    const editRef = useRef(null);
+    const handleEdit = useCallback(() => {
+        onEdit(todo.id, editRef.current.value);
         setIsEditing(false);
-    };
+    },[isEditing]);
 
     return (
         <div className={`flex items-center p-2.5 border-b border-gray-200 ${todo.completed ? 'bg-gray-50' : ''}`}>
@@ -17,8 +16,7 @@ const TodoItem = memo(({ todo, onToggle, onDelete, onEdit }) => {
                 <div className="flex flex-1">
                     <input
                         type="text"
-                        value={editText}
-                        onChange={(e) => setEditText(e.target.value)}
+                        ref={editRef}
                         className="flex-1 mr-2 p-1.5 border border-gray-300 rounded"
                     />
                     <button onClick={handleEdit} className="px-2 py-1 bg-blue-500 text-white rounded mr-1">
