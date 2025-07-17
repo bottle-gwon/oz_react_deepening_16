@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 
-const TodoForm = ({ onAdd }) => {
+const TodoForm = memo(({ onAdd }) => {
     const [text, setText] = useState('');
 
     const handleSubmit = (e) => {
@@ -29,6 +29,6 @@ const TodoForm = ({ onAdd }) => {
             </button>
         </form>
     );
-};
+});
 
 export default TodoForm;
